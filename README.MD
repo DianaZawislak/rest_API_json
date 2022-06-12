@@ -1,8 +1,8 @@
 # REST API Processing JSON Data Response and Testing
 
-### Name: <Insert Here>
+### Name: Diana Zawislak
 
-### UCID: <Insert Here>
+### UCID: DZ29
 
 ## Introduction
 
