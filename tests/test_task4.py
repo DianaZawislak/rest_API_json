@@ -5,9 +5,8 @@ import json
 import logging
 import app
 
-def test_task4(sleep, setup_logs, load_env):
+def test_task4():
     """Signup for another API and write your own test to verify the data you receive"""
-    """Testing API Response"""  
     # pylint: disable=unused-argument, comparison-with-itself, singleton-comparison
 
     response_logger = logging.getLogger("currency_api_response")
@@ -21,4 +20,3 @@ def test_task4(sleep, setup_logs, load_env):
     response_logger.info(currency)
 
     assert len(currency) > 0
-
