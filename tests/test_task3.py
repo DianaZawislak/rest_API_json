@@ -7,7 +7,7 @@ def test_task3():
     # pylint: unused-import, disable=unused-argument, comparison-with-itself, singleton-comparison
 
     #JSON string
-    json_string = '{"name":"John"."age":30, "city":"New York"}'
+    json_string ='{"name":"John", "age":30, "city":"New York"}'
 
     #convert json to python dictionary using json.loads:
     json_string_to_python_dictionary = json.loads(json_string)
