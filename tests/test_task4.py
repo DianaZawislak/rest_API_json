@@ -10,15 +10,15 @@ def test_task4(sleep, setup_logs, load_env):
     """Testing API Response"""  
     # pylint: disable=unused-argument, comparison-with-itself, singleton-comparison
 
-    response_logger = logging.getLogger("netflix_api_response")
-    endpoint ="search/titles?order_by=date&type=movie"
+    response_logger = logging.getLogger("currency_api_response")
+    endpoint ="/currency/convert?format=json&from=AUD&to=CAD&amount=1"
 
-    response = app.netflix_api_request(endpoint)
+    response = app.currency_api_request(endpoint)
     python_object = json.loads(response)
     response_logger.info(python_object)
 
-    movies = python_object['data']
-    response_logger.info(movies)
+    currency = python_object
+    response_logger.info(currency)
 
-    assert len(movies) > 0
+    assert len(currency) > 0
 

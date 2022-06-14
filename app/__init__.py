@@ -71,6 +71,32 @@ def netflix_api_request(endpoint):
 
     return data.decode("utf-8")
 
+@RateLimiter(max_calls=1, period=1)
+def currency_api_request(endpoint):
+
+    """This makes a request to hotels on rapid api and saves the request to the hotels_api_response logger"""
+    # This creates an HTTP connection to make a request
+    conn = http.client.HTTPSConnection("currency-converter5.p.rapidapi.com")
+
+    # this sets up an HTTP Request
+    headers = {
+        'X-RapidAPI-Key': str(os.getenv('CURRENCY_API_KEY')),  # gets the rapid API key from the .env file
+        'X-RapidAPI-Host': 'currency-converter5.p.rapidapi.com',
+    }
+
+    try:
+        # this makes the actual request.
+        conn.request("GET", endpoint, headers=headers)
+    except Exception as e:
+        app_log = logging.getLogger("errors")
+        app_log.error(e, exc_info=True)
+    # this gets the response data
+    res = conn.getresponse()
+    # this reads the response data and returns it as a python object
+    response_logger = logging.getLogger("currency_api_response")
+    data = res.read()
+
+    return data.decode("utf-8")
 
 def main():
     """This is the main function that is run"""
@@ -153,6 +179,14 @@ LOGGING_CONFIG = {
             'maxBytes': 10000000,
             'backupCount': 5,
         },
+        'file.handler.currency_api_response': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'just_message',
+            'filename': os.path.join(Config.LOG_DIR, 'currency_api_response.json'),
+            'encoding': 'utf-8',
+            'maxBytes': 10000000,
+            'backupCount': 5,
+        },
         'file.handler.default_file': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'standard',
@@ -180,6 +214,11 @@ LOGGING_CONFIG = {
         },
         'netflix_api_response': {
             'handlers': ['file.handler.netflix_api_response'],
+            'level': 'INFO',
+            'propagate': False
+        },
+        'currency_api_response': {
+            'handlers': ['file.handler.currency_api_response'],
             'level': 'INFO',
             'propagate': False
         },
