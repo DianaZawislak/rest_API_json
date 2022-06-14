@@ -10,14 +10,15 @@ def test_task4(sleep, setup_logs, load_env):
     """Testing API Response"""  
     # pylint: disable=unused-argument, comparison-with-itself, singleton-comparison
 
-    response_logger = logging.getLogger("api_response")
-    endpoint = "/v1/geo/cities"
-    response = app.geo_api_request(endpoint)
+    response_logger = logging.getLogger("netflix_api_response")
+    endpoint ="search/titles?order_by=date&type=movie"
+
+    response = app.netflix_api_request(endpoint)
     python_object = json.loads(response)
     response_logger.info(python_object)
 
-    cities = python_object['data']
-    response_logger.info(cities)
+    movies = python_object['data']
+    response_logger.info(movies)
 
-    assert len(cities) > 0
+    assert len(movies) > 0
 
